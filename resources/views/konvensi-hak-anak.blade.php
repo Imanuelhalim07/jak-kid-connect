@@ -1,37 +1,47 @@
 @extends('layouts.app')
 
-@section('title', 'Teks Konvensi Hak Anak')
-
 @section('content')
-<section class="konvensi-full">
-    <h1>Teks Lengkap Konvensi Hak Anak (KHA)</h1>
-    <p class="date">Disahkan oleh PBB pada 20 November 1989.</p>
 
-    <article class="pasal">
-        <h2>Prinsip Utama (Pasal 1-4)</h2>
-        <p>Konvensi ini didasari pada 4 prinsip utama: Non-diskriminasi, Kepentingan Terbaik Anak, Hak Hidup & Tumbuh Kembang, dan Partisipasi Anak.</p>
-    </article>
+<div class="konvensi-header">
+    <div class="container">
+        <h1>Konvensi Hak Anak</h1>
+        <p>Konvensi Hak Anak adalah perjanjian hak asasi manusia internasional yang disahkan oleh PBB pada tahun 1989. Konvensi ini menguraikan hak-hak dasar yang harus dimiliki oleh setiap anak di seluruh dunia.</p>
+    </div>
+</div>
 
-    <article class="pasal">
-        <h2>Pasal 7: Nama dan Kewarganegaraan</h2>
-        <p>Anak harus didaftar segera setelah lahir dan berhak atas sebuah nama dan untuk memperoleh kewarganegaraan.</p>
-    </article>
+<section class="py-5 text-center">
+    <div class="container">
 
-    <article class="pasal">
-        <h2>Pasal 12: Pendapat Anak</h2>
-        <p>Anak berhak menyatakan pendapatnya secara bebas dalam semua hal yang memengaruhi dirinya, dan pendapat tersebut harus dipertimbangkan secara serius.</p>
-    </article>
+        <h2 style="color: var(--color-secondary); margin-bottom: 20px;">Uji Pengetahuan Awal Anda!</h2>
+        <a href="{{ route('pretest') }}" class="btn btn-pre-test">Mulai Pre-Test (Awal Materi)</a>
 
-    <article class="pasal">
-        <h2>Pasal 28: Pendidikan</h2>
-        <p>Setiap anak berhak atas pendidikan. Pendidikan dasar harus wajib dan tersedia gratis bagi semua.</p>
-    </article>
+        <hr style="border-top: 2px solid #ddd; margin: 50px 0;">
 
-    {{-- Lanjutkan dengan pasal-pasal utama lainnya --}}
+        <h2 style="color: var(--color-secondary); margin-bottom: 30px;">41 Pasal Utama Hak Anak (UNICEF)</h2>
 
-    <div class="link-test">
-        <p>Sudah membaca? Uji pengetahuan Anda:</p>
-        <a href="{{ route('post-test.show') }}" class="btn-primary">Ikuti Post-Test</a>
+        <div class="pasal-list">
+
+            <div class="pasal-item">
+                <h3>Pasal 1: Definisi Anak</h3>
+                <p>Setiap manusia di bawah usia 18 tahun, kecuali berdasarkan undang-undang yang berlaku bagi anak, kedewasaan dicapai lebih awal.</p>
+            </div>
+            <div class="pasal-item">
+                <h3>Pasal 2: Non-Diskriminasi</h3>
+                <p>Semua hak berlaku untuk semua anak tanpa diskriminasi dalam bentuk apa pun, terlepas dari ras, agama, atau kemampuan.</p>
+            </div>
+            <div class="pasal-item">
+                <h3>Pasal 3: Kepentingan Terbaik Anak</h3>
+                <p>Kepentingan terbaik anak harus menjadi pertimbangan utama dalam semua tindakan yang berkaitan dengan anak.</p>
+            </div>
+
+        </div>
+
+        <hr style="border-top: 2px solid #ddd; margin: 50px 0;">
+
+        <h2 style="color: var(--color-success); margin-bottom: 20px;">Uji Pemahaman Anda!</h2>
+        <a href="{{ route('posttest') }}" class="btn btn-post-test">Mulai Post-Test (Akhir Materi)</a>
+
     </div>
 </section>
+
 @endsection

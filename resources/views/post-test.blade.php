@@ -16,18 +16,15 @@
     </div>
     @endif
 
-    // resources/views/post-test.blade.php
-
-    // ... (Kode di atas) ...
+    {{-- HAPUS SEMUA COMMENT PHP/FILE PATH YANG TIDAK PERLU DI SINI --}}
 
     @if (!isset($result))
     <form action="{{ route('post-test.submit') }}" method="POST" class="quiz-form">
         @csrf
 
-        {{-- DIPERBAIKI: Ubah 'Questions' menjadi $questions --}}
+        {{-- Pastikan variabel $questions dikirim dari controller --}}
         @foreach ($questions as $key => $q)
         <div class="question-block">
-            {{-- Variabel $q['question'] juga kehilangan tanda $ di screenshot --}}
             <p class="question-number">{{ $key + 1 }}. {{ $q['question'] }}</p>
             <div class="options">
                 @foreach ($q['options'] as $option)

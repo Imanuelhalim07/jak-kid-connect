@@ -1,11 +1,719 @@
-@import 'tailwindcss';
+/* =======================================================
+   GLOBAL STYLES & VARIABLES (White Background & Clean)
+   ======================================================= */
+:root {
+    /* Palet Warna Utama */
+    --color-primary: #1565c0; /* Biru (Kluster, Link) */
+    --color-secondary: #d32f2f; /* Merah (Konvensi, Misi) */
+    --color-accent: #ffc107; /* Kuning (Kegiatan) */
+    --color-success: #388e3c; /* Hijau (RPTRA, Tujuan) */
+    --color-footer: #ff9800; /* Orange */
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+    --white: #ffffff; /* Putih Konsisten untuk BG dan Nav */
+    --dark: #212529; /* Hitam untuk Teks dan Hover Nav */
+    --medium-grey: #6c757d;
+    --light-grey-soft: #f8f9fa; /* Untuk elemen kontras lembut */
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --shadow-base: rgba(0, 0, 0, 0.08); /* Shadow pemisah Header */
+    --shadow-hover: rgba(0, 0, 0, 0.15);
+
+    --font-primary: "Poppins", sans-serif;
+    --hover-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--white); /* LATAR BELAKANG PUTIH KONSISTEN */
+    color: var(--dark);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.py-4 {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+.py-5 {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+/* Base Button & Link Style */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: var(--hover-transition);
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+}
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-primary);
+    transition: color 0.3s ease;
+}
+
+/* =======================================================
+   HEADER & NAVIGATION (Separator Hitam)
+   ======================================================= */
+header {
+    background-color: var(--white);
+    padding: 15px 0;
+    box-shadow: 0 1px 0 var(--dark); /* GARIS HITAM TIPIS SEBAGAI PEMBATAS */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo img {
+    height: 40px; /* Sesuaikan ukuran logo */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--dark);
+    font-weight: 500;
+    padding: 5px 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+/* Nav Link Hover Effect (Warna Hitam/Dark) */
+.nav-links a:hover,
+.nav-links li:hover > a {
+    color: var(--dark); /* Tetap hitam */
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Nav Link Underline Hover Effect (Warna Spesifik) */
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: -5px;
+    left: 50%;
+    background-color: var(--dark); /* Default: Hitam */
+    transition: all 0.3s ease-in-out;
+}
+.nav-links a:hover::after,
+.nav-links li:hover > a::after {
+    width: 100%;
+    left: 0;
+}
+
+/* Nav Hover Custom Colors (Untuk Beranda, Tentang Kami, Login) */
+.nav-links .nav-home a::after,
+.nav-links .nav-about a::after,
+.nav-links .nav-login a::after {
+    background-color: var(--dark);
+}
+
+/* Nav Hover Kluster Hak Anak */
+.nav-links .nav-kluster a {
+    color: var(--color-primary);
+}
+.nav-links .nav-kluster a::after {
+    background-color: var(--color-primary);
+}
+
+/* Nav Hover Konvensi Hak Anak */
+.nav-links .nav-konvensi a {
+    color: var(--color-secondary);
+}
+.nav-links .nav-konvensi a::after {
+    background-color: var(--color-secondary);
+}
+
+/* Nav Hover Kegiatan Ramah Anak */
+.nav-links .nav-kegiatan a {
+    color: var(--color-accent);
+}
+.nav-links .nav-kegiatan a::after {
+    background-color: var(--color-accent);
+}
+
+/* Nav Hover Cari RPTRA */
+.nav-links .nav-rptra a {
+    color: var(--color-success);
+}
+.nav-links .nav-rptra a::after {
+    background-color: var(--color-success);
+}
+
+/* Dropdown Menu (Untuk Konvensi) */
+.dropdown {
+    position: relative;
+}
+.dropdown-content {
+    position: absolute;
+    background-color: var(--white);
+    min-width: 250px;
+    box-shadow: 0 8px 20px var(--shadow-hover);
+    z-index: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 10px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: var(--hover-transition);
+    border-top: 3px solid var(--color-secondary); /* Konvensi */
+    margin-top: 5px;
+}
+.dropdown:hover .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.dropdown-content a {
+    color: var(--dark);
+    padding: 12px 16px;
+    display: block;
+    text-align: left;
+    font-weight: 500;
+}
+.dropdown-content a:hover {
+    background-color: var(--light-grey-soft);
+    color: var(--color-secondary);
+}
+
+/* =======================================================
+   HOMEPAGE (BERANDA) - Hero & Fitur Kami (4 Cards)
+   ======================================================= */
+.hero-section {
+    padding: 80px 0;
+    text-align: center;
+    background: var(--white); /* Putih */
+}
+.hero-section h1 {
+    font-size: 3em;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 15px;
+}
+/* Kata-kata di Hero (Mengikuti instruksi) */
+.hero-text-secondary {
+    font-size: 1.2em;
+    color: var(--medium-grey);
+    margin-bottom: 40px;
+}
+.btn-hero {
+    background-color: var(--color-success);
+    color: var(--white);
+    padding: 14px 35px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(56, 142, 60, 0.4);
+}
+.btn-hero:hover {
+    background-color: #2e7d32;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(56, 142, 60, 0.6);
+}
+
+/* Fitur Utama Cards (4 Cards) */
+.fitur-utama {
+    padding: 60px 0;
+    background-color: var(--light-grey-soft); /* Kontras lembut */
+    text-align: center;
+}
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* JADI 4 KOLOM */
+    gap: 30px;
+}
+.fitur-utama .card {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow-base);
+    transition: var(--hover-transition);
+    border-top: 5px solid var(--dark); /* Default */
+}
+.fitur-utama .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px var(--shadow-hover);
+}
+.fitur-utama .card h3 {
+    font-size: 1.5em;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    color: var(--dark);
+}
+.fitur-utama .card a {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+}
+/* Card Color Mapping */
+.card-kluster {
+    border-color: var(--color-primary);
+}
+.card-kluster a {
+    color: var(--color-primary);
+}
+
+.card-konvensi {
+    border-color: var(--color-secondary);
+}
+.card-konvensi a {
+    color: var(--color-secondary);
+}
+
+.card-kegiatan {
+    border-color: var(--color-accent);
+}
+.card-kegiatan a {
+    color: var(--color-accent);
+}
+
+.card-rptra {
+    border-color: var(--color-success);
+}
+.card-rptra a {
+    color: var(--color-success);
+}
+
+/* =======================================================
+   TENTANG KAMI (Visi Misi Tujuan & Tim Kami)
+   ======================================================= */
+.about-us h1 {
+    font-size: 2.5em;
+    color: var(--dark);
+    text-align: center;
+    margin-bottom: 50px;
+    font-weight: 800;
+}
+
+.vmt-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    text-align: center;
+}
+.vmt-item {
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow-base);
+    background-color: var(--white);
+}
+.vmt-item h2 {
+    font-size: 1.6em;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.vmt-item p {
+    color: var(--medium-grey);
+}
+/* VMT Color Coding */
+.vmt-visi {
+    border-top: 5px solid var(--color-primary);
+}
+.vmt-visi h2 {
+    color: var(--color-primary);
+}
+
+.vmt-misi {
+    border-top: 5px solid var(--color-secondary);
+}
+.vmt-misi h2 {
+    color: var(--color-secondary);
+}
+
+.vmt-tujuan {
+    border-top: 5px solid var(--color-success);
+}
+.vmt-tujuan h2 {
+    color: var(--color-success);
+}
+
+/* Tim Kami Section */
+.team-section {
+    background-color: var(--light-grey-soft);
+    padding: 60px 0;
+    margin-top: 60px;
+    text-align: center;
+}
+.team-section h2 {
+    font-size: 2em;
+    color: var(--dark);
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+.team-grid {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+.team-member {
+    width: 300px;
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow-base);
+}
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 4px solid var(--color-primary);
+}
+.team-member h3 {
+    font-size: 1.5em;
+    color: var(--dark);
+    margin-bottom: 5px;
+}
+.team-member .role {
+    color: var(--color-secondary);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+}
+.team-member p {
+    font-size: 0.95em;
+    color: var(--medium-grey);
+}
+
+/* =======================================================
+   KONVENSI HAK ANAK (Pre-Test, Pasal, Post-Test)
+   ======================================================= */
+.konvensi-header {
+    background-color: var(--color-secondary);
+    color: var(--white);
+    padding: 40px 0;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.konvensi-header h1 {
+    font-size: 3em;
+    font-weight: 800;
+}
+.konvensi-header p {
+    max-width: 800px;
+    margin: 10px auto 0;
+    font-size: 1.1em;
+}
+
+.btn-pre-test {
+    background-color: var(--color-primary);
+    color: var(--white);
+    padding: 12px 30px;
+    margin-bottom: 40px;
+}
+.btn-pre-test:hover {
+    background-color: #0d47a1;
+}
+
+.pasal-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+}
+.pasal-item {
+    background-color: var(--white);
+    padding: 20px;
+    border-left: 4px solid var(--color-secondary);
+    border-radius: 6px;
+    box-shadow: 0 2px 10px var(--shadow-base);
+}
+.pasal-item h3 {
+    font-size: 1.2em;
+    color: var(--color-secondary);
+    margin-bottom: 5px;
+}
+
+.btn-post-test {
+    background-color: var(--color-success);
+    color: var(--white);
+    padding: 12px 30px;
+    margin-top: 40px;
+}
+.btn-post-test:hover {
+    background-color: #2e7d32;
+}
+
+/* =======================================================
+   KEGIATAN RAMAH ANAK (Permainan Slides)
+   ======================================================= */
+.kegiatan-section h1 {
+    color: var(--color-accent);
+    font-weight: 800;
+    margin-bottom: 40px;
+    text-align: center;
+}
+.kegiatan-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+.kegiatan-card {
+    background-color: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px var(--shadow-base);
+    transition: var(--hover-transition);
+    overflow: hidden;
+    border-top: 5px solid var(--color-accent);
+}
+.kegiatan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px var(--shadow-hover);
+}
+.kegiatan-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.kegiatan-card .card-body {
+    padding: 20px;
+}
+.kegiatan-card h2 {
+    font-size: 1.4em;
+    color: var(--dark);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+.kegiatan-card .meta {
+    font-size: 0.9em;
+    color: var(--medium-grey);
+}
+.kegiatan-card .meta i {
+    color: var(--color-accent);
+    margin-right: 5px;
+}
+.kegiatan-card .desc {
+    margin-top: 15px;
+    font-size: 0.95em;
+}
+
+/* =======================================================
+   CARI RPTRA & FILTER CONTROLS
+   ======================================================= */
+.rptra-section h1 {
+    color: var(--color-success);
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.filter-controls {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+.filter-controls button {
+    background-color: var(--white);
+    color: var(--dark);
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    padding: 10px 20px;
+    transition: var(--hover-transition);
+    font-weight: 500;
+}
+.filter-controls button:hover {
+    background-color: #e8f5e9; /* Hijau muda lembut */
+    border-color: var(--color-success);
+}
+.filter-controls button.active {
+    background-color: var(--color-success);
+    color: var(--white);
+    border-color: var(--color-success);
+    box-shadow: 0 4px 10px rgba(56, 142, 60, 0.4);
+}
+.search-input {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    width: 100%;
+    max-width: 300px;
+    transition: border-color 0.3s;
+}
+.grid-rptra {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+.rptra-card {
+    background-color: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px var(--shadow-base);
+    transition: var(--hover-transition);
+    overflow: hidden;
+    border-top: 5px solid var(--color-success);
+    cursor: pointer;
+}
+.rptra-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px var(--shadow-hover);
+}
+.rptra-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.rptra-info {
+    padding: 20px;
+}
+.rptra-info h3 {
+    color: var(--color-success);
+    font-size: 1.4em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* =======================================================
+   FOOTER (Logo, Kontak, Medsos, Copyright)
+   ======================================================= */
+footer {
+    background-color: var(--color-footer);
+    color: var(--dark);
+    padding: 40px 0 10px 0;
+    margin-top: auto;
+    box-shadow: 0 -4px 12px var(--shadow-base);
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-logo-col img {
+    height: 50px;
+    margin-bottom: 15px;
+}
+.footer-logo-col p {
+    font-size: 0.95em;
+    color: var(--dark);
+}
+
+.footer-col h3 {
+    font-size: 1.3em;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--dark);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+    padding-bottom: 5px;
+}
+
+.footer-contact p,
+.footer-social p {
+    margin-bottom: 10px;
+    font-size: 0.95em;
+    color: var(--dark);
+}
+.footer-contact i {
+    color: var(--color-primary);
+    margin-right: 10px;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+.social-links a {
+    color: var(--dark);
+    font-size: 1.8em;
+    transition: color 0.3s;
+}
+.social-links a:hover {
+    color: var(--color-primary);
+    transform: scale(1.1);
+}
+
+.footer-copyright {
+    text-align: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 10px;
+}
+.footer-copyright p {
+    font-size: 0.85em;
+    color: var(--dark);
+}
+
+/* =======================================================
+   RESPONSIVENESS (Untuk Mobile 2.5)
+   ======================================================= */
+@media (max-width: 992px) {
+    .nav-links {
+        display: none;
+    } /* Sembunyikan Nav Desktop */
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .card-container,
+    .vmt-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    .card-container {
+        gap: 20px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .footer-logo-col,
+    .footer-contact,
+    .footer-social {
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .footer-contact i {
+        margin-right: 5px;
+    }
+    .social-links {
+        justify-content: center;
+    }
+
+    .team-grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
 }
